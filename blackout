@@ -2,7 +2,10 @@
 
 require 'rtesseract'
 
-image = RTesseract.new(ARGV[0])
+image = ARGV[0]
+image = 'images/theatre.jpg' if image.nil?
+
+image = RTesseract.new(image)
 text = image.to_s
 
 # text = "Further meetings\nover theatre bid\n\nTHURSDAV, DECEMBER 13 To WEDNESDAY DECEMBER 19‘ 2012\n\nby Anne Bymo\nLocal government reporter\n\namm w or\n\nCHAMPIONS of a new theatre\nfor Exeter are planning mnher\nIgreetings to explore the possib-\n, .m\n\nAn initial meeting was organ-\nised by Exeter Civic Society and\nwas attended lty more than 50\nPeople\n\nof those who went along, 36\nsaid they were in favour of a\nmajor new theatre venue in the\ncity centre. and 20 said they\nwould like to be part of a work-\nmg “WP. .\n\nThe civic society which has\nmade it clear it is neither for nor\nagainst a new theatre, has\nagreed to host turther meet-\n\nInga,\n\nThe initial meeting arose fol-\nlowing discussions about the re-\ndevelopment ofExeter‘s bus and\ncoach station, which many see\nas being a great location for a\nnew lmseat theatre. The city\ncouncil takes the view it would\nrather have a new swimming\n\npool as part of the redevelop\nment,\n\nKeith Lewis. vice chairman of\nthe society said: “Most of the\nfeeling in the room was very\npositive. with people not want-\ning to threaten the existence of\nthe theatres we already have.\n\n“People did say they thought\nNorthoott is not right for Exeter,\nsaying it is not in the right place\nand doesn't put on the sort of\nshows they want to see.\n\n“We have not got endless hind»\ning, but we are prepared to host\nfurther meetings\n\n“We will write to thou who\nhave expressed an interest, in-\nviting them to another meeting,\nif that's what they want to do.\"\n\nNot all are convinced the city\nneeds a 1.200 seat theatre.\n\nDavid Lockwood. director of\nExeter's Bikeshed Theatre . at-\ntended the meeting and alter-\nWards told the Echo: “From a\nfinancial point of view it is a\ncomplete nonvstarter.\n\n“The Arts Council has an-\nnounced £llt6m cuts to its (und-\ning and ATT, which runs\ntheatres in 1brquay and Bristol.\ntakes over venues which are fall-\ning into disrepair to help ex»\nisting buildings rather than\nbuild new ones\n\n\"Also. the number of people\ngoing to the theatre is going\ndown rather than up.\"\n\nAndrew Leadbetter, city and\ncounty councillor, also went\nalong to the meeting and said: “I\nhave an open mind and wanted\nto ﬁnd out more.\n\n“I do think it would be lovely\nto walk past a theatre in the\ncentre of Exeter, see what‘s on\nand think ‘I would like to go and\nsee that', but don't know if it‘s\nfeasible. I think the city council\nshould investigate it more.\"\n\nThe city council has consist»\nently said a theatre the size of\nthe Theatre Royal in Plymouth\nis not sustainable, and would be\nunlikely to attract mnding.\n\nHave your say' ema’l Imeuoaxpmuandecho,co,uk\n\n \n\n \n\n"
@@ -13,7 +16,7 @@ text.gsub! ' ', censor
 
 blackout = []
 
-puts text.gsub(/[a-zA-Z0-9]+/) { |word| 
+full_text = text.gsub(/[a-zA-Z0-9]+/) { |word|
 	word = ['I','a'].sample if word.size == 1
 	if rand(50)==0 
 		blackout << word
@@ -23,4 +26,16 @@ puts text.gsub(/[a-zA-Z0-9]+/) { |word|
 	word
 }
 
-puts blackout.join(' ')
+open("results/#{Time.now.to_i}.txt", 'a') { |f|
+  f.puts full_text
+}
+
+puts full_text
+
+result = blackout.join(' ')
+
+open('results/results.md', 'a') { |f|
+  f.puts " - _#{result}_ (#{Time.now})"
+}
+
+puts result

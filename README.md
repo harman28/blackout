@@ -1,7 +1,7 @@
 # blackout
 Poetry in the dark
 
-Run `./blackout theatre.jpg`
+Run `./blackout images/theatre.jpg`
 
 Nice results:
  - _has arose I of cuts and which theatre_
