@@ -34,7 +34,7 @@ puts full_text
 
 result = blackout.join(' ')
 
-open('results/results.md', 'a') { |f|
+open('results/readme.md', 'a') { |f|
   f.puts " - _#{result}_ (#{Time.now})"
 }
 
